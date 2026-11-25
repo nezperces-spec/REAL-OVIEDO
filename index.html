@@ -223,7 +223,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .search-box, .select-box, .input-box {
@@ -250,7 +250,7 @@
       display: flex;
       gap: 6px;
       overflow-x: auto;
-      padding-bottom: 4px;
+      padding-bottom: 6px;
       scrollbar-width: none;
       margin-bottom: 12px;
     }
@@ -357,7 +357,7 @@
 
     .stat-box {
       text-align: right;
-      min-width: 44px;
+      min-width: 50px;
     }
 
     .stat-num {
@@ -369,6 +369,14 @@
 
     .stat-num.gold {
       color: #b45309;
+    }
+
+    .stat-num.accent {
+      color: var(--navy-700);
+    }
+
+    .stat-num.warn {
+      color: var(--les-fg);
     }
 
     .stat-lbl {
@@ -767,22 +775,71 @@
 
     <section id="view-plantilla" class="view active">
       <div class="controls-row">
-        <input type="search" id="searchInput" class="search-box" placeholder="Buscar por nombre o dorsal..." />
+        <input type="search" id="searchInput" class="search-box" placeholder="Buscar dorsal, apodo o nombre..." />
         <select id="posFilter" class="select-box">
-          <option value="ALL">Todas las posiciones</option>
+          <option value="ALL">Posición: Todas</option>
           <option value="Portero">Porteros</option>
           <option value="Defensa">Defensas</option>
           <option value="Centrocampista">Centrocampistas</option>
           <option value="Delantero">Delanteros</option>
         </select>
+        <select id="activityFilter" class="select-box">
+          <option value="ALL">Estado/Filtro: Todos</option>
+          <option value="WITH_GOALS">Con goles (≥1)</option>
+          <option value="WITH_MIN">Con minutos (≥1')</option>
+          <option value="WITH_TIT">Con titularidades (≥1)</option>
+          <option value="WITH_CARDS">Con tarjetas (TA/TR)</option>
+          <option value="WITH_LES">Con lesiones (LES)</option>
+          <option value="WITH_NC">Con no convocatorias (NC)</option>
+          <option value="WITH_SM">Con suplencias sin min. (SM)</option>
+        </select>
+      </div>
+
+      <div class="controls-row">
+        <select id="sortSelect" class="select-box" style="flex:1 1 100%;" aria-label="Clasificar por parámetro">
+          <option value="min">Clasificar por: ⏱ Minutos totales (0–80'/J)</option>
+          <option value="pct_min">Clasificar por: 📈 % Minutos del total posible</option>
+          <option value="avg_pj">Clasificar por: 📊 Media Minutos / Partido Jugado</option>
+          <option value="avg_j">Clasificar por: 📉 Media Minutos / Jornada</option>
+          <option value="min_goal">Clasificar por: ⚡ Minuto / Gol (menor es mejor)</option>
+          <option value="goals">Clasificar por: ⚽ Goles totales</option>
+          <option value="goals_per_pj">Clasificar por: 🎯 Goles / Partido Jugado</option>
+          <option value="tit">Clasificar por: 🟢 Titularidades (T)</option>
+          <option value="pj">Clasificar por: 👕 Partidos Jugados (T+S)</option>
+          <option value="conv">Clasificar por: 📋 Convocatorias (T+S+SM)</option>
+          <option value="sup">Clasificar por: 🔵 Suplencias con minutos (S)</option>
+          <option value="sm">Clasificar por: 🟡 Suplencias sin minutos (SM)</option>
+          <option value="nc">Clasificar por: ⚪ No Convocados (NC)</option>
+          <option value="les">Clasificar por: 🔴 Lesiones (LES)</option>
+          <option value="ta">Clasificar por: 🟨 Tarjetas Amarillas (TA)</option>
+          <option value="tr">Clasificar por: 🟥 Tarjetas Rojas (TR)</option>
+          <option value="cards_total">Clasificar por: 🟨🟥 Tarjetas Totales (TA+TR)</option>
+          <option value="dorsal">Clasificar por: # Dorsal (1–25)</option>
+          <option value="short">Clasificar por: 🔤 Nombre / Apodo (A–Z)</option>
+          <option value="pos">Clasificar por: 🛡️ Posición</option>
+        </select>
       </div>
 
       <div class="sort-pills" id="sortPills">
         <button class="sort-pill active" data-sort="min">⏱ Minutos</button>
+        <button class="sort-pill" data-sort="avg_pj">📊 Media Min/PJ</button>
+        <button class="sort-pill" data-sort="min_goal">⚡ Minuto/Gol</button>
         <button class="sort-pill" data-sort="goals">⚽ Goles</button>
         <button class="sort-pill" data-sort="tit">🟢 Titularidades</button>
-        <button class="sort-pill" data-sort="pj">👕 Partidos</button>
+        <button class="sort-pill" data-sort="pj">👕 PJ</button>
+        <button class="sort-pill" data-sort="conv">📋 Conv.</button>
+        <button class="sort-pill" data-sort="sup">🔵 Supl. (S)</button>
+        <button class="sort-pill" data-sort="sm">🟡 Sin Min (SM)</button>
+        <button class="sort-pill" data-sort="nc">⚪ NC</button>
+        <button class="sort-pill" data-sort="les">🔴 Lesión</button>
+        <button class="sort-pill" data-sort="ta">🟨 TA</button>
+        <button class="sort-pill" data-sort="tr">🟥 TR</button>
+        <button class="sort-pill" data-sort="pct_min">📈 % Min.</button>
+        <button class="sort-pill" data-sort="avg_j">📉 Min/J</button>
+        <button class="sort-pill" data-sort="goals_per_pj">🎯 Gol/PJ</button>
         <button class="sort-pill" data-sort="dorsal"># Dorsal</button>
+        <button class="sort-pill" data-sort="short">🔤 A–Z</button>
+        <button class="sort-pill" data-sort="pos">🛡️ Posición</button>
       </div>
 
       <div id="rosterList"></div>
@@ -956,7 +1013,7 @@
   <div id="toast" class="toast"></div>
 
   <script>
-    const STORAGE_KEY = "real_oviedo_b_2026_2027_v2";
+    const STORAGE_KEY = "real_oviedo_b_2026_2027_v4";
 
     const DEFAULT_STATE = {
       players: [{"dorsal": 1, "short": "ALEX", "full": "Alejandro Fernández", "pos": "Portero"}, {"dorsal": 2, "short": "MARCO", "full": "Marco Suárez", "pos": "Defensa"}, {"dorsal": 3, "short": "PRAVIA", "full": "Iván Pravía", "pos": "Defensa"}, {"dorsal": 4, "short": "DARIO", "full": "Darío Díaz", "pos": "Defensa"}, {"dorsal": 5, "short": "NICO", "full": "Nico Tuñón", "pos": "Defensa"}, {"dorsal": 6, "short": "VEGA", "full": "Hugo Villar", "pos": "Centrocampista"}, {"dorsal": 7, "short": "VILLA", "full": "Hugo Fernández Villa", "pos": "Delantero"}, {"dorsal": 8, "short": "CRESPO", "full": "Mateo Crespo", "pos": "Centrocampista"}, {"dorsal": 9, "short": "ADRI", "full": "Adrián González", "pos": "Delantero"}, {"dorsal": 10, "short": "MAURO", "full": "Mauro Campelo", "pos": "Centrocampista"}, {"dorsal": 11, "short": "MOHA", "full": "Mohamed Reda Lahri", "pos": "Delantero"}, {"dorsal": 12, "short": "DAVID", "full": "David Bello", "pos": "Delantero"}, {"dorsal": 13, "short": "MANU", "full": "Manuel Gómez", "pos": "Portero"}, {"dorsal": 14, "short": "ADRI NUÑEZ", "full": "Adrián Núñez", "pos": "Centrocampista"}, {"dorsal": 15, "short": "NEL", "full": "Nel Díez", "pos": "Defensa"}, {"dorsal": 16, "short": "CALI", "full": "Cali Hernández", "pos": "Centrocampista"}, {"dorsal": 17, "short": "LEO", "full": "Leo Fontanillas", "pos": "Defensa"}, {"dorsal": 18, "short": "HUGO MARTIN", "full": "Hugo Martín", "pos": "Centrocampista"}, {"dorsal": 19, "short": "HUGO GOMEZ", "full": "Hugo Gómez", "pos": "Centrocampista"}, {"dorsal": 20, "short": "PABLO", "full": "Pablo Pérez-Moya", "pos": "Centrocampista"}, {"dorsal": 21, "short": "TOLI", "full": "Daniel Tolivia", "pos": "Delantero"}, {"dorsal": 25, "short": "M. CODESAL", "full": "Miguel Codesal", "pos": "Centrocampista"}],
@@ -1038,10 +1095,14 @@
       const maxPosible = totalJornadas * 80;
       const pctMin = maxPosible > 0 ? (min / maxPosible) * 100 : 0;
       const avgMinPj = pj > 0 ? min / pj : 0;
-      const minPerGoal = goals > 0 ? (min / goals).toFixed(1) + "'" : "-";
+      const avgMinJ = totalJornadas > 0 ? min / totalJornadas : 0;
+      const goalsPerPj = pj > 0 ? goals / pj : 0;
+      const cardsTotal = ta + tr;
+      const minPerGoalNum = goals > 0 ? (min / goals) : null;
+      const minPerGoal = minPerGoalNum !== null ? minPerGoalNum.toFixed(1) + "'" : "-";
       return {
         dorsal, conv, nc, les, pj, tit, sup, sm, min, goals, ta, tr,
-        pctMin, avgMinPj, minPerGoal, totalJornadas
+        cardsTotal, pctMin, avgMinPj, avgMinJ, goalsPerPj, minPerGoal, minPerGoalNum, totalJornadas
       };
     }
 
@@ -1062,34 +1123,116 @@
       `;
     }
 
+    function setSortKey(sortKey) {
+      currentSort = sortKey;
+      document.getElementById("sortSelect").value = sortKey;
+      document.querySelectorAll(".sort-pill").forEach(p => {
+        p.classList.toggle("active", p.dataset.sort === sortKey);
+      });
+      renderRoster();
+    }
+
     function renderRoster() {
       const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
       const pos = document.getElementById("posFilter").value;
+      const act = document.getElementById("activityFilter").value;
 
       let list = state.players.map(p => ({ ...p, stats: computePlayerStats(p.dorsal) }));
 
       if (pos !== "ALL") {
         list = list.filter(p => p.pos === pos);
       }
+      if (act === "WITH_GOALS") list = list.filter(p => p.stats.goals > 0);
+      else if (act === "WITH_MIN") list = list.filter(p => p.stats.min > 0);
+      else if (act === "WITH_TIT") list = list.filter(p => p.stats.tit > 0);
+      else if (act === "WITH_CARDS") list = list.filter(p => p.stats.cardsTotal > 0);
+      else if (act === "WITH_LES") list = list.filter(p => p.stats.les > 0);
+      else if (act === "WITH_NC") list = list.filter(p => p.stats.nc > 0);
+      else if (act === "WITH_SM") list = list.filter(p => p.stats.sm > 0);
+
       if (q) {
         list = list.filter(p =>
           String(p.dorsal).includes(q) ||
           p.short.toLowerCase().includes(q) ||
-          p.full.toLowerCase().includes(q)
+          p.full.toLowerCase().includes(q) ||
+          p.pos.toLowerCase().includes(q)
         );
       }
 
       list.sort((a, b) => {
         if (currentSort === "dorsal") return a.dorsal - b.dorsal;
+        if (currentSort === "short") return a.short.localeCompare(b.short, "es");
+        if (currentSort === "pos") return a.pos.localeCompare(b.pos, "es") || b.stats.min - a.stats.min;
         if (currentSort === "goals") return b.stats.goals - a.stats.goals || b.stats.min - a.stats.min;
+        if (currentSort === "goals_per_pj") return b.stats.goalsPerPj - a.stats.goalsPerPj || b.stats.goals - a.stats.goals;
         if (currentSort === "tit") return b.stats.tit - a.stats.tit || b.stats.min - a.stats.min;
         if (currentSort === "pj") return b.stats.pj - a.stats.pj || b.stats.min - a.stats.min;
+        if (currentSort === "conv") return b.stats.conv - a.stats.conv || b.stats.min - a.stats.min;
+        if (currentSort === "sup") return b.stats.sup - a.stats.sup || b.stats.min - a.stats.min;
+        if (currentSort === "sm") return b.stats.sm - a.stats.sm || b.stats.conv - a.stats.conv;
+        if (currentSort === "nc") return b.stats.nc - a.stats.nc || a.dorsal - b.dorsal;
+        if (currentSort === "les") return b.stats.les - a.stats.les || a.dorsal - b.dorsal;
+        if (currentSort === "ta") return b.stats.ta - a.stats.ta || b.stats.tr - a.stats.tr;
+        if (currentSort === "tr") return b.stats.tr - a.stats.tr || b.stats.ta - a.stats.ta;
+        if (currentSort === "cards_total") return b.stats.cardsTotal - a.stats.cardsTotal || b.stats.tr - a.stats.tr;
+        if (currentSort === "pct_min") return b.stats.pctMin - a.stats.pctMin || b.stats.min - a.stats.min;
+        if (currentSort === "avg_pj") return b.stats.avgMinPj - a.stats.avgMinPj || b.stats.min - a.stats.min;
+        if (currentSort === "avg_j") return b.stats.avgMinJ - a.stats.avgMinJ || b.stats.min - a.stats.min;
+        if (currentSort === "min_goal") {
+          const aVal = a.stats.minPerGoalNum !== null ? a.stats.minPerGoalNum : Infinity;
+          const bVal = b.stats.minPerGoalNum !== null ? b.stats.minPerGoalNum : Infinity;
+          return aVal - bVal || b.stats.goals - a.stats.goals || b.stats.min - a.stats.min;
+        }
         return b.stats.min - a.stats.min || b.stats.goals - a.stats.goals;
       });
 
       const container = document.getElementById("rosterList");
       container.innerHTML = list.map(p => {
         const s = p.stats;
+        let rightPrimary = `<div class="stat-num">${s.min}'</div><div class="stat-lbl">${s.pctMin.toFixed(0)}%</div>`;
+        let rightSecondary = `<div class="stat-num gold">${s.goals}</div><div class="stat-lbl">Goles</div>`;
+
+        if (currentSort === "avg_pj") {
+          rightPrimary = `<div class="stat-num accent">${s.avgMinPj.toFixed(1)}'</div><div class="stat-lbl">Media/PJ</div>`;
+          rightSecondary = `<div class="stat-num">${s.min}'</div><div class="stat-lbl">${s.pj} PJ</div>`;
+        } else if (currentSort === "avg_j") {
+          rightPrimary = `<div class="stat-num accent">${s.avgMinJ.toFixed(1)}'</div><div class="stat-lbl">Media/J</div>`;
+          rightSecondary = `<div class="stat-num">${s.min}'</div><div class="stat-lbl">${s.totalJornadas} J</div>`;
+        } else if (currentSort === "pct_min") {
+          rightPrimary = `<div class="stat-num accent">${s.pctMin.toFixed(1)}%</div><div class="stat-lbl">Del total</div>`;
+          rightSecondary = `<div class="stat-num">${s.min}'</div><div class="stat-lbl">Min.</div>`;
+        } else if (currentSort === "min_goal") {
+          rightPrimary = `<div class="stat-num gold">${s.minPerGoal}</div><div class="stat-lbl">Min/Gol</div>`;
+          rightSecondary = `<div class="stat-num">${s.goals}</div><div class="stat-lbl">Goles</div>`;
+        } else if (currentSort === "goals_per_pj") {
+          rightPrimary = `<div class="stat-num gold">${s.goalsPerPj.toFixed(2)}</div><div class="stat-lbl">Gol/PJ</div>`;
+          rightSecondary = `<div class="stat-num">${s.goals}</div><div class="stat-lbl">${s.pj} PJ</div>`;
+        } else if (currentSort === "tit") {
+          rightPrimary = `<div class="stat-num" style="color:var(--ok-fg);">${s.tit}</div><div class="stat-lbl">Titular</div>`;
+          rightSecondary = `<div class="stat-num">${s.pj}</div><div class="stat-lbl">PJ</div>`;
+        } else if (currentSort === "pj") {
+          rightPrimary = `<div class="stat-num">${s.pj}</div><div class="stat-lbl">PJ</div>`;
+          rightSecondary = `<div class="stat-num">${s.min}'</div><div class="stat-lbl">Min.</div>`;
+        } else if (currentSort === "conv") {
+          rightPrimary = `<div class="stat-num">${s.conv}</div><div class="stat-lbl">Conv.</div>`;
+          rightSecondary = `<div class="stat-num">${s.pj}</div><div class="stat-lbl">PJ</div>`;
+        } else if (currentSort === "sup") {
+          rightPrimary = `<div class="stat-num" style="color:var(--sup-fg);">${s.sup}</div><div class="stat-lbl">Supl. (S)</div>`;
+          rightSecondary = `<div class="stat-num">${s.min}'</div><div class="stat-lbl">Min.</div>`;
+        } else if (currentSort === "sm") {
+          rightPrimary = `<div class="stat-num" style="color:var(--sm-fg);">${s.sm}</div><div class="stat-lbl">Sin Min</div>`;
+          rightSecondary = `<div class="stat-num">${s.conv}</div><div class="stat-lbl">Conv.</div>`;
+        } else if (currentSort === "nc") {
+          rightPrimary = `<div class="stat-num" style="color:var(--nc-fg);">${s.nc}</div><div class="stat-lbl">NC</div>`;
+          rightSecondary = `<div class="stat-num">${s.les}</div><div class="stat-lbl">Lesión</div>`;
+        } else if (currentSort === "les") {
+          rightPrimary = `<div class="stat-num warn">${s.les}</div><div class="stat-lbl">Lesión</div>`;
+          rightSecondary = `<div class="stat-num">${s.nc}</div><div class="stat-lbl">NC</div>`;
+        } else if (currentSort === "ta" || currentSort === "tr" || currentSort === "cards_total") {
+          rightPrimary = `<div class="stat-num warn">${s.ta}TA / ${s.tr}TR</div><div class="stat-lbl">Tarjetas</div>`;
+          rightSecondary = `<div class="stat-num">${s.cardsTotal}</div><div class="stat-lbl">Total</div>`;
+        }
+
         return `
           <div class="player-card" onclick="openPlayerProfile(${p.dorsal})">
             <div class="player-left">
@@ -1099,22 +1242,16 @@
                   <span class="player-short">${p.short}</span>
                   <span class="pos-tag">${p.pos}</span>
                 </div>
-                <div class="player-sub">${p.full} · ${s.tit}T / ${s.sup}S · Conv: ${s.conv}</div>
+                <div class="player-sub">${p.full} · ${s.pj}PJ (${s.tit}T/${s.sup}S/${s.sm}SM) · ${s.avgMinPj.toFixed(1)}'/PJ · ${s.minPerGoal}</div>
               </div>
             </div>
             <div class="player-stats-right">
-              <div class="stat-box">
-                <div class="stat-num">${s.min}'</div>
-                <div class="stat-lbl">${s.pctMin.toFixed(0)}%</div>
-              </div>
-              <div class="stat-box">
-                <div class="stat-num gold">${s.goals}</div>
-                <div class="stat-lbl">Goles</div>
-              </div>
+              <div class="stat-box">${rightPrimary}</div>
+              <div class="stat-box">${rightSecondary}</div>
             </div>
           </div>
         `;
-      }).join("") || `<div class="card" style="text-align:center;color:var(--text-muted);">No hay jugadores que coincidan con el filtro.</div>`;
+      }).join("") || `<div class="card" style="text-align:center;color:var(--text-muted);">No hay jugadores que coincidan con los filtros.</div>`;
     }
 
     function openPlayerProfile(dorsal) {
@@ -1156,8 +1293,8 @@
         <div class="metric-card"><div class="metric-val" style="color:var(--sup-fg);">${s.sup}</div><div class="metric-lbl">Suplente (Min.)</div></div>
         <div class="metric-card"><div class="metric-val" style="color:var(--sm-fg);">${s.sm}</div><div class="metric-lbl">Sin Minutos</div></div>
         <div class="metric-card"><div class="metric-val" style="color:var(--les-fg);">${s.nc + s.les}</div><div class="metric-lbl">NC (${s.nc}) / Les (${s.les})</div></div>
-        <div class="metric-card"><div class="metric-val" style="color:#b45309;">${s.goals}</div><div class="metric-lbl">Goles</div></div>
-        <div class="metric-card"><div class="metric-val">${s.avgMinPj.toFixed(1)}'</div><div class="metric-lbl">Media / PJ</div></div>
+        <div class="metric-card"><div class="metric-val" style="color:#b45309;">${s.goals}</div><div class="metric-lbl">Goles (${s.goalsPerPj.toFixed(2)}/PJ)</div></div>
+        <div class="metric-card"><div class="metric-val">${s.avgMinPj.toFixed(1)}'</div><div class="metric-lbl">Media / PJ (${s.avgMinJ.toFixed(1)}'/J)</div></div>
         <div class="metric-card"><div class="metric-val">${s.minPerGoal}</div><div class="metric-lbl">Min. / Gol · ${s.ta}TA/${s.tr}TR</div></div>
       `;
 
@@ -1299,13 +1436,10 @@
 
     document.getElementById("searchInput").addEventListener("input", renderRoster);
     document.getElementById("posFilter").addEventListener("change", renderRoster);
+    document.getElementById("activityFilter").addEventListener("change", renderRoster);
+    document.getElementById("sortSelect").addEventListener("change", (ev) => setSortKey(ev.target.value));
     document.querySelectorAll(".sort-pill").forEach(pill => {
-      pill.addEventListener("click", () => {
-        document.querySelectorAll(".sort-pill").forEach(p => p.classList.remove("active"));
-        pill.classList.add("active");
-        currentSort = pill.dataset.sort;
-        renderRoster();
-      });
+      pill.addEventListener("click", () => setSortKey(pill.dataset.sort));
     });
 
     document.getElementById("matchSelect").addEventListener("change", renderMatchDetail);
