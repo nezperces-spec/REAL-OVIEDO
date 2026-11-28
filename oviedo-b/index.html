@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Real Oviedo B" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#091833" />
+  <title>Real Oviedo SAD B · Control Plantilla</title>
+  <style>
+    :root {
+      --navy-950: #061024;
+      --navy-900: #091833;
+      --navy-800: #112a57;
+      --navy-700: #1a3d7c;
+      --gold-500: #d4a017;
+      --gold-400: #eab308;
+      --gold-100: #fef9e7;
+      --bg-app: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-subtle: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --ok-bg: #dcfce7;
+      --ok-fg: #15803d;
+      --sup-bg: #dbeafe;
+      --sup-fg: #1d4ed8;
+      --sm-bg: #fef3c7;
+      --sm-fg: #b45309;
+      --nc-bg: #f1f5f9;
+      --nc-fg: #475569;
+      --les-bg: #fee2e2;
+      --les-fg: #b91c1c;
+      --shadow-sm: 0 2px 8px rgba(9, 24, 51, 0.05);
+      --shadow-md: 0 8px 24px rgba(9, 24, 51, 0.08);
+      --radius-lg: 18px;
+      --radius-md: 13px;
+      --safe-bottom: env(safe-area-inset-bottom, 12px);
+      --safe-top: env(safe-area-inset-top, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg-app);
+      color: var(--text-main);
+      padding-bottom: calc(84px + var(--safe-bottom));
+      min-height: 100vh;
+    }
+
+    .app-header {
+      background: linear-gradient(145deg, var(--navy-950) 0%, var(--navy-800) 70%, var(--navy-700) 100%);
+      color: #ffffff;
+      padding: calc(14px + var(--safe-top)) 16px 18px;
+      border-bottom: 3px solid var(--gold-500);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      box-shadow: 0 6px 20px rgba(6, 16, 36, 0.25);
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .crest-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1.5px solid rgba(212, 160, 23, 0.75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: -0.5px;
+      color: var(--gold-400);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+    }
+
+    .brand-sub {
+      margin: 3px 0 0;
+      font-size: 11.5px;
+      color: #cbd5e1;
+      font-weight: 500;
+    }
+
+    .pill-info {
+      background: rgba(212, 160, 23, 0.16);
+      border: 1px solid rgba(212, 160, 23, 0.45);
+      color: #fde68a;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      max-width: 920px;
+      margin: 14px auto 0;
+    }
+
+    .kpi-mini {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 8px 6px;
+      text-align: center;
+    }
+
+    .kpi-mini-val {
+      font-size: 15px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    .kpi-mini-lbl {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #cbd5e1;
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 14px 14px 10px;
+    }
+
+    .view {
+      display: none;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 12px;
+    }
+
+    .notice-banner {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e3a8a;
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      font-size: 12px;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--navy-900);
+      letter-spacing: -0.2px;
+    }
+
+    .section-caption {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .search-box, .select-box, .input-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      font-family: inherit;
+      font-size: 13.5px;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .search-box {
+      flex: 1 1 180px;
+    }
+
+    .search-box:focus, .select-box:focus, .input-box:focus {
+      border-color: var(--navy-700);
+      box-shadow: 0 0 0 3px rgba(26, 61, 124, 0.12);
+    }
+
+    .sort-pills {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: none;
+      margin-bottom: 12px;
+    }
+
+    .sort-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .sort-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .sort-pill.active {
+      background: var(--navy-900);
+      color: #ffffff;
+      border-color: var(--navy-900);
+    }
+
+    .player-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 13px;
+      margin-bottom: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+    }
+
+    .player-left {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+
+    .dorsal-chip {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: var(--navy-900);
+      color: var(--gold-400);
+      font-weight: 900;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .player-meta {
+      min-width: 0;
+    }
+
+    .player-name-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .player-short {
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--navy-900);
+    }
+
+    .pos-tag {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      padding: 1px 7px;
+      border-radius: 999px;
+    }
+
+    .player-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .player-stats-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .stat-box {
+      text-align: right;
+      min-width: 50px;
+    }
+
+    .stat-num {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--navy-900);
+      line-height: 1.1;
+    }
+
+    .stat-num.gold {
+      color: #b45309;
+    }
+
+    .stat-num.accent {
+      color: var(--navy-700);
+    }
+
+    .stat-num.warn {
+      color: var(--les-fg);
+    }
+
+    .stat-lbl {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .picker-strip {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      scrollbar-width: none;
+    }
+
+    .picker-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .picker-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 7px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .picker-btn.active {
+      background: var(--navy-900);
+      color: #ffffff;
+      border-color: var(--gold-500);
+    }
+
+    .profile-banner {
+      background: linear-gradient(135deg, var(--navy-900), var(--navy-700));
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 3px solid var(--gold-500);
+    }
+
+    .profile-dorsal {
+      width: 52px;
+      height: 52px;
+      border-radius: 15px;
+      background: rgba(212, 160, 23, 0.2);
+      border: 1.5px solid var(--gold-400);
+      color: var(--gold-400);
+      font-size: 21px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .profile-h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .profile-p {
+      margin: 3px 0 0;
+      font-size: 12px;
+      color: #cbd5e1;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 11px 8px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .metric-val {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--navy-900);
+    }
+
+    .metric-lbl {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 7px;
+      height: 132px;
+      padding: 10px 4px 4px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+      min-width: 0;
+    }
+
+    .bar-val {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--navy-800);
+      margin-bottom: 3px;
+    }
+
+    .bar-fill {
+      width: 100%;
+      max-width: 28px;
+      border-radius: 6px 6px 2px 2px;
+      background: linear-gradient(180deg, var(--navy-700), var(--navy-900));
+      min-height: 2px;
+    }
+
+    .bar-fill.goal-bar {
+      border-top: 2.5px solid var(--gold-400);
+    }
+
+    .bar-lbl {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .st-T { background: var(--ok-bg); color: var(--ok-fg); }
+    .st-S { background: var(--sup-bg); color: var(--sup-fg); }
+    .st-SM { background: var(--sm-bg); color: var(--sm-fg); }
+    .st-NC { background: var(--nc-bg); color: var(--nc-fg); }
+    .st-LES { background: var(--les-bg); color: var(--les-fg); }
+
+    .history-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 4px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12.5px;
+    }
+
+    .history-row:last-child {
+      border-bottom: none;
+    }
+
+    .history-main {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .history-rival {
+      font-weight: 700;
+      color: var(--navy-900);
+    }
+
+    .history-date {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .history-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .match-banner {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .score-pill {
+      background: var(--navy-900);
+      color: var(--gold-400);
+      font-size: 18px;
+      font-weight: 900;
+      padding: 7px 14px;
+      border-radius: 12px;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+
+    .roster-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 2px;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 13px;
+    }
+
+    .roster-line:last-child {
+      border-bottom: none;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .form-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--navy-900);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 11px 14px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--navy-900);
+      color: #ffffff;
+      width: 100%;
+    }
+
+    .btn-gold {
+      background: var(--gold-500);
+      color: var(--navy-950);
+    }
+
+    .btn-outline {
+      background: var(--bg-card);
+      color: var(--navy-900);
+      border: 1px solid var(--border);
+    }
+
+    .btn-danger {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .btn-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: calc(84px + var(--safe-bottom));
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--navy-950);
+      color: #ffffff;
+      border: 1px solid var(--gold-500);
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.22s ease;
+      z-index: 60;
+      box-shadow: var(--shadow-md);
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 6px 6px calc(6px + var(--safe-bottom));
+      z-index: 40;
+      box-shadow: 0 -4px 16px rgba(9, 24, 51, 0.06);
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      padding: 6px 4px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 10.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .nav-btn.active {
+      color: var(--navy-900);
+      background: var(--gold-100);
+    }
+
+    .nav-icon {
+      font-size: 17px;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-top">
+      <div class="brand-group">
+        <div class="crest-badge">RO</div>
+        <div>
+          <h1 class="brand-title">Real Oviedo SAD B</h1>
+          <p class="brand-sub">2ª Infantil (G.2) · Temp. 2026-2027 · Partidos 80'</p>
+        </div>
+      </div>
+      <div class="pill-info" id="headerJornadasBadge">9 Jornadas</div>
+    </div>
+    <div class="kpi-strip" id="headerKpis"></div>
+  </header>
+
+  <main class="container">
+    <div class="notice-banner" id="storageNotice">
+      <strong>Consejo iPhone (Safari):</strong> ábrelo en Safari, pulsa <em>Compartir → Añadir a pantalla de inicio</em> y usa <em>Copia JSON</em> de vez en cuando para respaldar tus datos.
+    </div>
+
+    <section id="view-plantilla" class="view active">
+      <div class="controls-row">
+        <input type="search" id="searchInput" class="search-box" placeholder="Buscar dorsal, apodo o nombre..." />
+        <select id="posFilter" class="select-box">
+          <option value="ALL">Posición: Todas</option>
+          <option value="Portero">Porteros</option>
+          <option value="Defensa">Defensas</option>
+          <option value="Centrocampista">Centrocampistas</option>
+          <option value="Delantero">Delanteros</option>
+        </select>
+        <select id="activityFilter" class="select-box">
+          <option value="ALL">Estado/Filtro: Todos</option>
+          <option value="WITH_GOALS">Con goles (≥1)</option>
+          <option value="WITH_MIN">Con minutos (≥1')</option>
+          <option value="WITH_TIT">Con titularidades (≥1)</option>
+          <option value="WITH_CARDS">Con tarjetas (TA/TR)</option>
+          <option value="WITH_LES">Con lesiones (LES)</option>
+          <option value="WITH_NC">Con no convocatorias (NC)</option>
+          <option value="WITH_SM">Con suplencias sin min. (SM)</option>
+        </select>
+      </div>
+
+      <div class="controls-row">
+        <select id="sortSelect" class="select-box" style="flex:1 1 100%;" aria-label="Clasificar por parámetro">
+          <option value="min">Clasificar por: ⏱ Minutos totales (0–80'/J)</option>
+          <option value="pct_min">Clasificar por: 📈 % Minutos del total posible</option>
+          <option value="avg_pj">Clasificar por: 📊 Media Minutos / Partido Jugado</option>
+          <option value="avg_j">Clasificar por: 📉 Media Minutos / Jornada</option>
+          <option value="min_goal">Clasificar por: ⚡ Minuto / Gol (menor es mejor)</option>
+          <option value="goals">Clasificar por: ⚽ Goles totales</option>
+          <option value="goals_per_pj">Clasificar por: 🎯 Goles / Partido Jugado</option>
+          <option value="tit">Clasificar por: 🟢 Titularidades (T)</option>
+          <option value="pj">Clasificar por: 👕 Partidos Jugados (T+S)</option>
+          <option value="conv">Clasificar por: 📋 Convocatorias (T+S+SM)</option>
+          <option value="sup">Clasificar por: 🔵 Suplencias con minutos (S)</option>
+          <option value="sm">Clasificar por: 🟡 Suplencias sin minutos (SM)</option>
+          <option value="nc">Clasificar por: ⚪ No Convocados (NC)</option>
+          <option value="les">Clasificar por: 🔴 Lesiones (LES)</option>
+          <option value="ta">Clasificar por: 🟨 Tarjetas Amarillas (TA)</option>
+          <option value="tr">Clasificar por: 🟥 Tarjetas Rojas (TR)</option>
+          <option value="cards_total">Clasificar por: 🟨🟥 Tarjetas Totales (TA+TR)</option>
+          <option value="dorsal">Clasificar por: # Dorsal (1–25)</option>
+          <option value="short">Clasificar por: 🔤 Nombre / Apodo (A–Z)</option>
+          <option value="pos">Clasificar por: 🛡️ Posición</option>
+        </select>
+      </div>
+
+      <div class="sort-pills" id="sortPills">
+        <button class="sort-pill active" data-sort="min">⏱ Minutos</button>
+        <button class="sort-pill" data-sort="avg_pj">📊 Media Min/PJ</button>
+        <button class="sort-pill" data-sort="min_goal">⚡ Minuto/Gol</button>
+        <button class="sort-pill" data-sort="goals">⚽ Goles</button>
+        <button class="sort-pill" data-sort="tit">🟢 Titularidades</button>
+        <button class="sort-pill" data-sort="pj">👕 PJ</button>
+        <button class="sort-pill" data-sort="conv">📋 Conv.</button>
+        <button class="sort-pill" data-sort="sup">🔵 Supl. (S)</button>
+        <button class="sort-pill" data-sort="sm">🟡 Sin Min (SM)</button>
+        <button class="sort-pill" data-sort="nc">⚪ NC</button>
+        <button class="sort-pill" data-sort="les">🔴 Lesión</button>
+        <button class="sort-pill" data-sort="ta">🟨 TA</button>
+        <button class="sort-pill" data-sort="tr">🟥 TR</button>
+        <button class="sort-pill" data-sort="pct_min">📈 % Min.</button>
+        <button class="sort-pill" data-sort="avg_j">📉 Min/J</button>
+        <button class="sort-pill" data-sort="goals_per_pj">🎯 Gol/PJ</button>
+        <button class="sort-pill" data-sort="dorsal"># Dorsal</button>
+        <button class="sort-pill" data-sort="short">🔤 A–Z</button>
+        <button class="sort-pill" data-sort="pos">🛡️ Posición</button>
+      </div>
+
+      <div id="rosterList"></div>
+    </section>
+
+    <section id="view-ficha" class="view">
+      <div class="picker-strip" id="playerPickerStrip"></div>
+      <div id="playerProfileBanner" class="profile-banner"></div>
+      <div class="grid-3" id="playerMetricsGrid"></div>
+
+      <div class="card">
+        <div class="section-head">
+          <h3 class="section-title">Minutos por jornada (sobre 80')</h3>
+          <span class="section-caption">Barra dorada = gol anotado</span>
+        </div>
+        <div class="chart-bars" id="playerBarChart"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <h3 class="section-title">Historial partido a partido</h3>
+          <span class="section-caption" id="playerHistoryCount"></span>
+        </div>
+        <div id="playerHistoryList"></div>
+      </div>
+    </section>
+
+    <section id="view-jornadas" class="view">
+      <div class="card">
+        <div class="section-head">
+          <h3 class="section-title">Seleccionar jornada</h3>
+          <span class="section-caption">Convocatoria y acta (80')</span>
+        </div>
+        <select id="matchSelect" class="select-box" style="width:100%;"></select>
+      </div>
+
+      <div id="matchDetailCard" class="card"></div>
+    </section>
+
+    <section id="view-editar" class="view">
+      <div class="card">
+        <div class="section-head">
+          <h3 class="section-title">Registrar o actualizar participación</h3>
+          <span class="section-caption">Guardado automático localStorage</span>
+        </div>
+
+        <form id="entryForm">
+          <div class="form-grid">
+            <div class="form-field">
+              <label class="form-label" for="formJornada">Jornada</label>
+              <input type="number" id="formJornada" class="input-box" min="1" max="38" value="10" required />
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="formDorsal">Jugador</label>
+              <select id="formDorsal" class="select-box"></select>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="formStatus">Estado</label>
+              <select id="formStatus" class="select-box">
+                <option value="T">Titular (T)</option>
+                <option value="S">Suplente con minutos (S)</option>
+                <option value="SM">Convocado sin minutos (SM)</option>
+                <option value="NC">No Convocado (NC)</option>
+                <option value="LES">Lesión (LES)</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="formMin">Minutos (0–80)</label>
+              <input type="number" id="formMin" class="input-box" min="0" max="80" value="0" required />
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="formGoals">Goles</label>
+              <input type="number" id="formGoals" class="input-box" min="0" max="15" value="0" required />
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="formTA">T. Amarillas</label>
+              <input type="number" id="formTA" class="input-box" min="0" max="3" value="0" required />
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="formTR">T. Rojas</label>
+              <input type="number" id="formTR" class="input-box" min="0" max="2" value="0" required />
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">💾 Guardar registro en la app</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <h3 class="section-title">Añadir nueva jornada completa (ej. J10)</h3>
+          <span class="section-caption">Crea partido + filas base</span>
+        </div>
+        <div class="form-grid">
+          <div class="form-field">
+            <label class="form-label" for="newMatchJ">Nº Jornada</label>
+            <input type="number" id="newMatchJ" class="input-box" min="1" max="38" value="10" />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="newMatchDate">Fecha</label>
+            <input type="text" id="newMatchDate" class="input-box" placeholder="28/11/2026" />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="newMatchRival">Rival</label>
+            <input type="text" id="newMatchRival" class="input-box" placeholder="Nombre del rival" />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="newMatchCond">Condición</label>
+            <select id="newMatchCond" class="select-box">
+              <option value="Local">Local</option>
+              <option value="Visitante">Visitante</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="newMatchScore">Resultado</label>
+            <input type="text" id="newMatchScore" class="input-box" placeholder="0-0" />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="newMatchVenue">Campo</label>
+            <input type="text" id="newMatchVenue" class="input-box" placeholder="La Pixarra / Estadio" />
+          </div>
+        </div>
+        <button type="button" id="addMatchBtn" class="btn btn-gold" style="width:100%;">➕ Crear jornada y cargar plantilla</button>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <h3 class="section-title">Copia de seguridad y exportación</h3>
+          <span class="section-caption">Protege tus datos en iPhone</span>
+        </div>
+        <div class="btn-row">
+          <button type="button" id="exportCsvBtn" class="btn btn-outline">📊 Exportar CSV (Excel)</button>
+          <button type="button" id="exportJsonBtn" class="btn btn-outline">⬇️ Copia JSON</button>
+        </div>
+        <div class="btn-row">
+          <label class="btn btn-outline" style="margin:0;">
+            ⬆️ Restaurar JSON
+            <input type="file" id="importJsonInput" accept="application/json" style="display:none;" />
+          </label>
+          <button type="button" id="resetDataBtn" class="btn btn-danger">↺ Restaurar J1–J9</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-tab="view-plantilla">
+      <span class="nav-icon">📋</span>
+      <span>Plantilla</span>
+    </button>
+    <button class="nav-btn" data-tab="view-ficha">
+      <span class="nav-icon">👤</span>
+      <span>Ficha Jugador</span>
+    </button>
+    <button class="nav-btn" data-tab="view-jornadas">
+      <span class="nav-icon">🗓️</span>
+      <span>Jornadas</span>
+    </button>
+    <button class="nav-btn" data-tab="view-editar">
+      <span class="nav-icon">✏️</span>
+      <span>Añadir / Editar</span>
+    </button>
+  </nav>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const STORAGE_KEY = "real_oviedo_b_2026_2027_v5";
+
+    const DEFAULT_STATE = {
+      players: [{"dorsal": 1, "short": "ALEX", "full": "Alejandro Fernández", "pos": "Portero"}, {"dorsal": 2, "short": "MARCO", "full": "Marco Suárez", "pos": "Defensa"}, {"dorsal": 3, "short": "PRAVIA", "full": "Iván Pravía", "pos": "Defensa"}, {"dorsal": 4, "short": "DARIO", "full": "Darío Díaz", "pos": "Defensa"}, {"dorsal": 5, "short": "NICO", "full": "Nico Tuñón", "pos": "Defensa"}, {"dorsal": 6, "short": "VEGA", "full": "Hugo Villar", "pos": "Centrocampista"}, {"dorsal": 7, "short": "VILLA", "full": "Hugo Fernández Villa", "pos": "Delantero"}, {"dorsal": 8, "short": "CRESPO", "full": "Mateo Crespo", "pos": "Centrocampista"}, {"dorsal": 9, "short": "ADRI", "full": "Adrián González", "pos": "Delantero"}, {"dorsal": 10, "short": "MAURO", "full": "Mauro Campelo", "pos": "Centrocampista"}, {"dorsal": 11, "short": "MOHA", "full": "Mohamed Reda Lahri", "pos": "Delantero"}, {"dorsal": 12, "short": "DAVID", "full": "David Bello", "pos": "Delantero"}, {"dorsal": 13, "short": "MANU", "full": "Manuel Gómez", "pos": "Portero"}, {"dorsal": 14, "short": "ADRI NUÑEZ", "full": "Adrián Núñez", "pos": "Centrocampista"}, {"dorsal": 15, "short": "NEL", "full": "Nel Díez", "pos": "Defensa"}, {"dorsal": 16, "short": "CALI", "full": "Cali Hernández", "pos": "Centrocampista"}, {"dorsal": 17, "short": "LEO", "full": "Leo Fontanillas", "pos": "Defensa"}, {"dorsal": 18, "short": "HUGO MARTIN", "full": "Hugo Martín", "pos": "Centrocampista"}, {"dorsal": 19, "short": "HUGO GOMEZ", "full": "Hugo Gómez", "pos": "Centrocampista"}, {"dorsal": 20, "short": "PABLO", "full": "Pablo Pérez-Moya", "pos": "Centrocampista"}, {"dorsal": 21, "short": "TOLI", "full": "Daniel Tolivia", "pos": "Delantero"}, {"dorsal": 25, "short": "M. CODESAL", "full": "Miguel Codesal", "pos": "Centrocampista"}],
+      matches: [{"j": 1, "date": "26/09/2026", "rival": "Centro Asturiano Oviedo A", "cond": "Local", "score": "4-0", "venue": "La Pixarra (Oviedo)"}, {"j": 2, "date": "03/10/2026", "rival": "Atlético de Lugones S.D. A", "cond": "Visitante", "score": "0-5", "venue": "Santa Bárbara (Lugones)"}, {"j": 3, "date": "10/10/2026", "rival": "Juventud Estadio C", "cond": "Local", "score": "6-1", "venue": "La Pixarra (Oviedo)"}, {"j": 4, "date": "17/10/2026", "rival": "Real Avilés Industrial B", "cond": "Visitante", "score": "0-5", "venue": "La Toba 1 (Avilés)"}, {"j": 5, "date": "24/10/2026", "rival": "Astur C.F. C", "cond": "Local", "score": "6-1", "venue": "La Pixarra (Oviedo)"}, {"j": 6, "date": "31/10/2026", "rival": "C.D. Grujoan A", "cond": "Visitante", "score": "1-1", "venue": "Luis Oliver (Oviedo)"}, {"j": 7, "date": "03/11/2026", "rival": "C.D. Mosconia A", "cond": "Local", "score": "5-0", "venue": "H.F.E. Tensi 1 (Oviedo)"}, {"j": 8, "date": "14/11/2026", "rival": "A.C.D. Alcava A", "cond": "Visitante", "score": "0-5", "venue": "Las Tolvas 2 (Laviana)"}, {"j": 9, "date": "21/11/2026", "rival": "Navia C.F. A", "cond": "Local", "score": "5-0", "venue": "H.F.E. Tensi 2 (Oviedo)"}, {"j": 10, "date": "28/11/2026", "rival": "S.D.C.R. La Corredoria A", "cond": "Visitante", "score": "1-7", "venue": "Diaz Vega (Oviedo)"}],
+      entries: [{"j": 1, "dorsal": 1, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 2, "status": "T", "min": 62, "goals": 1, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 3, "status": "T", "min": 57, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 4, "status": "T", "min": 80, "goals": 1, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 5, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 6, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 7, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 8, "status": "S", "min": 23, "goals": 1, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 9, "status": "T", "min": 62, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 10, "status": "T", "min": 57, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 11, "status": "T", "min": 57, "goals": 1, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 12, "status": "S", "min": 18, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 13, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 14, "status": "S", "min": 23, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 15, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 16, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 17, "status": "T", "min": 62, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 18, "status": "S", "min": 23, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 19, "status": "S", "min": 18, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 20, "status": "S", "min": 18, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 21, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 1, "dorsal": 25, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 1, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 2, "status": "LES", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 3, "status": "T", "min": 41, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 4, "status": "S", "min": 20, "goals": 1, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 5, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 6, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 7, "status": "T", "min": 60, "goals": 1, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 8, "status": "S", "min": 39, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 9, "status": "S", "min": 20, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 10, "status": "T", "min": 41, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 11, "status": "T", "min": 60, "goals": 1, "ta": 1, "tr": 0}, {"j": 2, "dorsal": 12, "status": "T", "min": 60, "goals": 2, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 13, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 14, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 15, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 16, "status": "LES", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 17, "status": "S", "min": 20, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 18, "status": "S", "min": 39, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 19, "status": "T", "min": 60, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 20, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 21, "status": "S", "min": 20, "goals": 1, "ta": 0, "tr": 0}, {"j": 2, "dorsal": 25, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 1, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 2, "status": "T", "min": 80, "goals": 1, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 3, "status": "S", "min": 29, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 4, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 5, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 6, "status": "S", "min": 29, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 7, "status": "T", "min": 80, "goals": 1, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 8, "status": "T", "min": 51, "goals": 1, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 9, "status": "T", "min": 51, "goals": 1, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 10, "status": "S", "min": 15, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 11, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 12, "status": "S", "min": 29, "goals": 1, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 13, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 14, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 15, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 16, "status": "LES", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 17, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 18, "status": "T", "min": 51, "goals": 1, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 19, "status": "S", "min": 15, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 20, "status": "T", "min": 51, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 21, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 3, "dorsal": 25, "status": "T", "min": 51, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 1, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 2, "status": "S", "min": 30, "goals": 1, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 3, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 4, "status": "S", "min": 20, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 5, "status": "T", "min": 40, "goals": 1, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 6, "status": "T", "min": 60, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 7, "status": "S", "min": 30, "goals": 2, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 8, "status": "T", "min": 50, "goals": 1, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 9, "status": "S", "min": 20, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 10, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 11, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 12, "status": "T", "min": 60, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 13, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 14, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 15, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 16, "status": "S", "min": 40, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 17, "status": "T", "min": 50, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 18, "status": "T", "min": 60, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 19, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 20, "status": "S", "min": 20, "goals": 0, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 21, "status": "T", "min": 80, "goals": 4, "ta": 0, "tr": 0}, {"j": 4, "dorsal": 25, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 1, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 2, "status": "T", "min": 48, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 3, "status": "T", "min": 62, "goals": 1, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 4, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 5, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 6, "status": "T", "min": 62, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 7, "status": "T", "min": 48, "goals": 1, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 8, "status": "S", "min": 18, "goals": 1, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 9, "status": "T", "min": 52, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 10, "status": "S", "min": 32, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 11, "status": "T", "min": 80, "goals": 2, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 12, "status": "S", "min": 28, "goals": 2, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 13, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 14, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 15, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 16, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 17, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 18, "status": "S", "min": 18, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 19, "status": "T", "min": 62, "goals": 1, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 20, "status": "S", "min": 18, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 21, "status": "S", "min": 32, "goals": 0, "ta": 0, "tr": 0}, {"j": 5, "dorsal": 25, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 1, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 2, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 3, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 4, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 5, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 6, "status": "S", "min": 40, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 7, "status": "T", "min": 60, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 8, "status": "S", "min": 20, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 9, "status": "T", "min": 60, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 10, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 11, "status": "T", "min": 80, "goals": 1, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 12, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 13, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 14, "status": "S", "min": 20, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 15, "status": "T", "min": 50, "goals": 0, "ta": 1, "tr": 0}, {"j": 6, "dorsal": 16, "status": "S", "min": 30, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 17, "status": "T", "min": 50, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 18, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 19, "status": "S", "min": 30, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 20, "status": "T", "min": 40, "goals": 0, "ta": 0, "tr": 0}, {"j": 6, "dorsal": 21, "status": "S", "min": 20, "goals": 0, "ta": 1, "tr": 0}, {"j": 6, "dorsal": 25, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 1, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 2, "status": "T", "min": 51, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 3, "status": "S", "min": 20, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 4, "status": "S", "min": 29, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 5, "status": "S", "min": 20, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 6, "status": "T", "min": 80, "goals": 1, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 7, "status": "T", "min": 51, "goals": 1, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 8, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 9, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 10, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 11, "status": "S", "min": 29, "goals": 1, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 12, "status": "T", "min": 80, "goals": 4, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 13, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 14, "status": "S", "min": 29, "goals": 2, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 15, "status": "T", "min": 60, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 16, "status": "LES", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 17, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 18, "status": "T", "min": 60, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 19, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 20, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 21, "status": "T", "min": 80, "goals": 2, "ta": 0, "tr": 0}, {"j": 7, "dorsal": 25, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 1, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 2, "status": "S", "min": 8, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 3, "status": "S", "min": 39, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 4, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 5, "status": "T", "min": 72, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 6, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 7, "status": "S", "min": 20, "goals": 2, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 8, "status": "T", "min": 72, "goals": 1, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 9, "status": "S", "min": 39, "goals": 1, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 10, "status": "T", "min": 60, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 11, "status": "S", "min": 8, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 12, "status": "T", "min": 41, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 13, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 14, "status": "S", "min": 20, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 15, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 16, "status": "LES", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 17, "status": "T", "min": 80, "goals": 1, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 18, "status": "T", "min": 41, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 19, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 20, "status": "T", "min": 80, "goals": 1, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 21, "status": "T", "min": 60, "goals": 1, "ta": 0, "tr": 0}, {"j": 8, "dorsal": 25, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 1, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 2, "status": "T", "min": 80, "goals": 1, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 3, "status": "T", "min": 51, "goals": 1, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 4, "status": "T", "min": 80, "goals": 1, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 5, "status": "S", "min": 40, "goals": 0, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 6, "status": "T", "min": 56, "goals": 1, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 7, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 8, "status": "T", "min": 80, "goals": 1, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 9, "status": "T", "min": 51, "goals": 2, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 10, "status": "T", "min": 40, "goals": 0, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 11, "status": "T", "min": 56, "goals": 1, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 12, "status": "S", "min": 29, "goals": 2, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 13, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 14, "status": "S", "min": 40, "goals": 0, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 15, "status": "T", "min": 40, "goals": 0, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 16, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 17, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 18, "status": "S", "min": 29, "goals": 0, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 19, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 20, "status": "S", "min": 24, "goals": 0, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 21, "status": "S", "min": 24, "goals": 0, "ta": 0, "tr": 0}, {"j": 9, "dorsal": 25, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 1, "status": "SM", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 2, "status": "T", "min": 55, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 3, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 4, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 5, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 6, "status": "S", "min": 25, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 7, "status": "T", "min": 47, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 8, "status": "S", "min": 33, "goals": 1, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 9, "status": "S", "min": 33, "goals": 2, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 10, "status": "S", "min": 25, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 11, "status": "T", "min": 55, "goals": 2, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 12, "status": "T", "min": 47, "goals": 1, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 13, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 14, "status": "T", "min": 80, "goals": 1, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 15, "status": "T", "min": 55, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 16, "status": "LES", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 17, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 18, "status": "S", "min": 25, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 19, "status": "T", "min": 80, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 20, "status": "T", "min": 47, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 21, "status": "S", "min": 33, "goals": 0, "ta": 0, "tr": 0}, {"j": 10, "dorsal": 25, "status": "NC", "min": 0, "goals": 0, "ta": 0, "tr": 0}]
+    };
+
+    const STATUS_LABELS = {
+      T: "Titular",
+      S: "Suplente",
+      SM: "Sin Minutos",
+      NC: "No Convocado",
+      LES: "Lesión"
+    };
+
+    function cloneDefault() {
+      return JSON.parse(JSON.stringify(DEFAULT_STATE));
+    }
+
+    function loadState() {
+      try {
+        const raw = window.localStorage.getItem(STORAGE_KEY);
+        if (!raw) return cloneDefault();
+        const parsed = JSON.parse(raw);
+        if (!parsed.players || !parsed.matches || !parsed.entries) return cloneDefault();
+        return parsed;
+      } catch (e) {
+        return cloneDefault();
+      }
+    }
+
+    function saveState() {
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        showToast("Aviso: guardado local no disponible en este contexto");
+      }
+    }
+
+    let state = loadState();
+    let currentSort = "min";
+    let selectedPlayerDorsal = 12;
+
+    function showToast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2300);
+    }
+
+    function getUniqueJornadas() {
+      const set = new Set([
+        ...state.matches.map(m => Number(m.j)),
+        ...state.entries.map(e => Number(e.j))
+      ]);
+      return Array.from(set).filter(n => !Number.isNaN(n)).sort((a, b) => a - b);
+    }
+
+    function computePlayerStats(dorsal) {
+      const pEntries = state.entries.filter(e => Number(e.dorsal) === Number(dorsal));
+      let conv = 0, nc = 0, les = 0, pj = 0, tit = 0, sup = 0, sm = 0, min = 0, goals = 0, ta = 0, tr = 0;
+      for (const e of pEntries) {
+        const m = Math.min(80, Math.max(0, Number(e.min) || 0));
+        const g = Math.max(0, Number(e.goals) || 0);
+        const a = Math.max(0, Number(e.ta) || 0);
+        const r = Math.max(0, Number(e.tr) || 0);
+        min += m;
+        goals += g;
+        ta += a;
+        tr += r;
+        if (e.status === "T") { conv++; pj++; tit++; }
+        else if (e.status === "S") { conv++; pj++; sup++; }
+        else if (e.status === "SM") { conv++; sm++; }
+        else if (e.status === "LES") { les++; }
+        else { nc++; }
+      }
+      const totalJornadas = getUniqueJornadas().length || 1;
+      const maxPosible = totalJornadas * 80;
+      const pctMin = maxPosible > 0 ? (min / maxPosible) * 100 : 0;
+      const avgMinPj = pj > 0 ? min / pj : 0;
+      const avgMinJ = totalJornadas > 0 ? min / totalJornadas : 0;
+      const goalsPerPj = pj > 0 ? goals / pj : 0;
+      const cardsTotal = ta + tr;
+      const minPerGoalNum = goals > 0 ? (min / goals) : null;
+      const minPerGoal = minPerGoalNum !== null ? minPerGoalNum.toFixed(1) + "'" : "-";
+      return {
+        dorsal, conv, nc, les, pj, tit, sup, sm, min, goals, ta, tr,
+        cardsTotal, pctMin, avgMinPj, avgMinJ, goalsPerPj, minPerGoal, minPerGoalNum, totalJornadas
+      };
+    }
+
+    function renderHeader() {
+      const jornadas = getUniqueJornadas();
+      const numJ = jornadas.length;
+      document.getElementById("headerJornadasBadge").textContent = `${numJ} Jornada${numJ === 1 ? "" : "s"}`;
+      const totalGoals = state.entries.reduce((acc, e) => acc + (Number(e.goals) || 0), 0);
+      const totalTA = state.entries.reduce((acc, e) => acc + (Number(e.ta) || 0), 0);
+      const totalTR = state.entries.reduce((acc, e) => acc + (Number(e.tr) || 0), 0);
+      const totalLes = state.entries.filter(e => e.status === "LES").length;
+
+      document.getElementById("headerKpis").innerHTML = `
+        <div class="kpi-mini"><div class="kpi-mini-val">${numJ * 80}'</div><div class="kpi-mini-lbl">Min. Tope</div></div>
+        <div class="kpi-mini"><div class="kpi-mini-val">${totalGoals}</div><div class="kpi-mini-lbl">Goles</div></div>
+        <div class="kpi-mini"><div class="kpi-mini-val">${totalTA} / ${totalTR}</div><div class="kpi-mini-lbl">TA / TR</div></div>
+        <div class="kpi-mini"><div class="kpi-mini-val">${totalLes}</div><div class="kpi-mini-lbl">Lesiones</div></div>
+      `;
+    }
+
+    function setSortKey(sortKey) {
+      currentSort = sortKey;
+      document.getElementById("sortSelect").value = sortKey;
+      document.querySelectorAll(".sort-pill").forEach(p => {
+        p.classList.toggle("active", p.dataset.sort === sortKey);
+      });
+      renderRoster();
+    }
+
+    function renderRoster() {
+      const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
+      const pos = document.getElementById("posFilter").value;
+      const act = document.getElementById("activityFilter").value;
+
+      let list = state.players.map(p => ({ ...p, stats: computePlayerStats(p.dorsal) }));
+
+      if (pos !== "ALL") {
+        list = list.filter(p => p.pos === pos);
+      }
+      if (act === "WITH_GOALS") list = list.filter(p => p.stats.goals > 0);
+      else if (act === "WITH_MIN") list = list.filter(p => p.stats.min > 0);
+      else if (act === "WITH_TIT") list = list.filter(p => p.stats.tit > 0);
+      else if (act === "WITH_CARDS") list = list.filter(p => p.stats.cardsTotal > 0);
+      else if (act === "WITH_LES") list = list.filter(p => p.stats.les > 0);
+      else if (act === "WITH_NC") list = list.filter(p => p.stats.nc > 0);
+      else if (act === "WITH_SM") list = list.filter(p => p.stats.sm > 0);
+
+      if (q) {
+        list = list.filter(p =>
+          String(p.dorsal).includes(q) ||
+          p.short.toLowerCase().includes(q) ||
+          p.full.toLowerCase().includes(q) ||
+          p.pos.toLowerCase().includes(q)
+        );
+      }
+
+      list.sort((a, b) => {
+        if (currentSort === "dorsal") return a.dorsal - b.dorsal;
+        if (currentSort === "short") return a.short.localeCompare(b.short, "es");
+        if (currentSort === "pos") return a.pos.localeCompare(b.pos, "es") || b.stats.min - a.stats.min;
+        if (currentSort === "goals") return b.stats.goals - a.stats.goals || b.stats.min - a.stats.min;
+        if (currentSort === "goals_per_pj") return b.stats.goalsPerPj - a.stats.goalsPerPj || b.stats.goals - a.stats.goals;
+        if (currentSort === "tit") return b.stats.tit - a.stats.tit || b.stats.min - a.stats.min;
+        if (currentSort === "pj") return b.stats.pj - a.stats.pj || b.stats.min - a.stats.min;
+        if (currentSort === "conv") return b.stats.conv - a.stats.conv || b.stats.min - a.stats.min;
+        if (currentSort === "sup") return b.stats.sup - a.stats.sup || b.stats.min - a.stats.min;
+        if (currentSort === "sm") return b.stats.sm - a.stats.sm || b.stats.conv - a.stats.conv;
+        if (currentSort === "nc") return b.stats.nc - a.stats.nc || a.dorsal - b.dorsal;
+        if (currentSort === "les") return b.stats.les - a.stats.les || a.dorsal - b.dorsal;
+        if (currentSort === "ta") return b.stats.ta - a.stats.ta || b.stats.tr - a.stats.tr;
+        if (currentSort === "tr") return b.stats.tr - a.stats.tr || b.stats.ta - a.stats.ta;
+        if (currentSort === "cards_total") return b.stats.cardsTotal - a.stats.cardsTotal || b.stats.tr - a.stats.tr;
+        if (currentSort === "pct_min") return b.stats.pctMin - a.stats.pctMin || b.stats.min - a.stats.min;
+        if (currentSort === "avg_pj") return b.stats.avgMinPj - a.stats.avgMinPj || b.stats.min - a.stats.min;
+        if (currentSort === "avg_j") return b.stats.avgMinJ - a.stats.avgMinJ || b.stats.min - a.stats.min;
+        if (currentSort === "min_goal") {
+          const aVal = a.stats.minPerGoalNum !== null ? a.stats.minPerGoalNum : Infinity;
+          const bVal = b.stats.minPerGoalNum !== null ? b.stats.minPerGoalNum : Infinity;
+          return aVal - bVal || b.stats.goals - a.stats.goals || b.stats.min - a.stats.min;
+        }
+        return b.stats.min - a.stats.min || b.stats.goals - a.stats.goals;
+      });
+
+      const container = document.getElementById("rosterList");
+      container.innerHTML = list.map(p => {
+        const s = p.stats;
+        let rightPrimary = `<div class="stat-num">${s.min}'</div><div class="stat-lbl">${s.pctMin.toFixed(0)}%</div>`;
+        let rightSecondary = `<div class="stat-num gold">${s.goals}</div><div class="stat-lbl">Goles</div>`;
+
+        if (currentSort === "avg_pj") {
+          rightPrimary = `<div class="stat-num accent">${s.avgMinPj.toFixed(1)}'</div><div class="stat-lbl">Media/PJ</div>`;
+          rightSecondary = `<div class="stat-num">${s.min}'</div><div class="stat-lbl">${s.pj} PJ</div>`;
+        } else if (currentSort === "avg_j") {
+          rightPrimary = `<div class="stat-num accent">${s.avgMinJ.toFixed(1)}'</div><div class="stat-lbl">Media/J</div>`;
+          rightSecondary = `<div class="stat-num">${s.min}'</div><div class="stat-lbl">${s.totalJornadas} J</div>`;
+        } else if (currentSort === "pct_min") {
+          rightPrimary = `<div class="stat-num accent">${s.pctMin.toFixed(1)}%</div><div class="stat-lbl">Del total</div>`;
+          rightSecondary = `<div class="stat-num">${s.min}'</div><div class="stat-lbl">Min.</div>`;
+        } else if (currentSort === "min_goal") {
+          rightPrimary = `<div class="stat-num gold">${s.minPerGoal}</div><div class="stat-lbl">Min/Gol</div>`;
+          rightSecondary = `<div class="stat-num">${s.goals}</div><div class="stat-lbl">Goles</div>`;
+        } else if (currentSort === "goals_per_pj") {
+          rightPrimary = `<div class="stat-num gold">${s.goalsPerPj.toFixed(2)}</div><div class="stat-lbl">Gol/PJ</div>`;
+          rightSecondary = `<div class="stat-num">${s.goals}</div><div class="stat-lbl">${s.pj} PJ</div>`;
+        } else if (currentSort === "tit") {
+          rightPrimary = `<div class="stat-num" style="color:var(--ok-fg);">${s.tit}</div><div class="stat-lbl">Titular</div>`;
+          rightSecondary = `<div class="stat-num">${s.pj}</div><div class="stat-lbl">PJ</div>`;
+        } else if (currentSort === "pj") {
+          rightPrimary = `<div class="stat-num">${s.pj}</div><div class="stat-lbl">PJ</div>`;
+          rightSecondary = `<div class="stat-num">${s.min}'</div><div class="stat-lbl">Min.</div>`;
+        } else if (currentSort === "conv") {
+          rightPrimary = `<div class="stat-num">${s.conv}</div><div class="stat-lbl">Conv.</div>`;
+          rightSecondary = `<div class="stat-num">${s.pj}</div><div class="stat-lbl">PJ</div>`;
+        } else if (currentSort === "sup") {
+          rightPrimary = `<div class="stat-num" style="color:var(--sup-fg);">${s.sup}</div><div class="stat-lbl">Supl. (S)</div>`;
+          rightSecondary = `<div class="stat-num">${s.min}'</div><div class="stat-lbl">Min.</div>`;
+        } else if (currentSort === "sm") {
+          rightPrimary = `<div class="stat-num" style="color:var(--sm-fg);">${s.sm}</div><div class="stat-lbl">Sin Min</div>`;
+          rightSecondary = `<div class="stat-num">${s.conv}</div><div class="stat-lbl">Conv.</div>`;
+        } else if (currentSort === "nc") {
+          rightPrimary = `<div class="stat-num" style="color:var(--nc-fg);">${s.nc}</div><div class="stat-lbl">NC</div>`;
+          rightSecondary = `<div class="stat-num">${s.les}</div><div class="stat-lbl">Lesión</div>`;
+        } else if (currentSort === "les") {
+          rightPrimary = `<div class="stat-num warn">${s.les}</div><div class="stat-lbl">Lesión</div>`;
+          rightSecondary = `<div class="stat-num">${s.nc}</div><div class="stat-lbl">NC</div>`;
+        } else if (currentSort === "ta" || currentSort === "tr" || currentSort === "cards_total") {
+          rightPrimary = `<div class="stat-num warn">${s.ta}TA / ${s.tr}TR</div><div class="stat-lbl">Tarjetas</div>`;
+          rightSecondary = `<div class="stat-num">${s.cardsTotal}</div><div class="stat-lbl">Total</div>`;
+        }
+
+        return `
+          <div class="player-card" onclick="openPlayerProfile(${p.dorsal})">
+            <div class="player-left">
+              <div class="dorsal-chip">#${p.dorsal}</div>
+              <div class="player-meta">
+                <div class="player-name-row">
+                  <span class="player-short">${p.short}</span>
+                  <span class="pos-tag">${p.pos}</span>
+                </div>
+                <div class="player-sub">${p.full} · ${s.pj}PJ (${s.tit}T/${s.sup}S/${s.sm}SM) · ${s.avgMinPj.toFixed(1)}'/PJ · ${s.minPerGoal}</div>
+              </div>
+            </div>
+            <div class="player-stats-right">
+              <div class="stat-box">${rightPrimary}</div>
+              <div class="stat-box">${rightSecondary}</div>
+            </div>
+          </div>
+        `;
+      }).join("") || `<div class="card" style="text-align:center;color:var(--text-muted);">No hay jugadores que coincidan con los filtros.</div>`;
+    }
+
+    function openPlayerProfile(dorsal) {
+      selectedPlayerDorsal = Number(dorsal);
+      switchTab("view-ficha");
+      renderPlayerProfile();
+    }
+
+    function renderPlayerProfile() {
+      const strip = document.getElementById("playerPickerStrip");
+      strip.innerHTML = state.players.map(p => `
+        <button class="picker-btn ${Number(p.dorsal) === Number(selectedPlayerDorsal) ? "active" : ""}" onclick="selectedPlayerDorsal=${p.dorsal}; renderPlayerProfile();">
+          <span>#${p.dorsal}</span>
+          <span>${p.short}</span>
+        </button>
+      `).join("");
+
+      const player = state.players.find(p => Number(p.dorsal) === Number(selectedPlayerDorsal)) || state.players[0];
+      const s = computePlayerStats(player.dorsal);
+
+      document.getElementById("playerProfileBanner").innerHTML = `
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="profile-dorsal">#${player.dorsal}</div>
+          <div>
+            <h2 class="profile-h2">${player.short}</h2>
+            <p class="profile-p">${player.full} · ${player.pos}</p>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:20px;font-weight:900;color:var(--gold-400);">${s.min}'</div>
+          <div style="font-size:11px;color:#cbd5e1;">${s.pctMin.toFixed(1)}% del total</div>
+        </div>
+      `;
+
+      document.getElementById("playerMetricsGrid").innerHTML = `
+        <div class="metric-card"><div class="metric-val">${s.conv}</div><div class="metric-lbl">Convocatorias</div></div>
+        <div class="metric-card"><div class="metric-val">${s.pj}</div><div class="metric-lbl">Partidos Jugados</div></div>
+        <div class="metric-card"><div class="metric-val" style="color:var(--ok-fg);">${s.tit}</div><div class="metric-lbl">Titularidades</div></div>
+        <div class="metric-card"><div class="metric-val" style="color:var(--sup-fg);">${s.sup}</div><div class="metric-lbl">Suplente (Min.)</div></div>
+        <div class="metric-card"><div class="metric-val" style="color:var(--sm-fg);">${s.sm}</div><div class="metric-lbl">Sin Minutos</div></div>
+        <div class="metric-card"><div class="metric-val" style="color:var(--les-fg);">${s.nc + s.les}</div><div class="metric-lbl">NC (${s.nc}) / Les (${s.les})</div></div>
+        <div class="metric-card"><div class="metric-val" style="color:#b45309;">${s.goals}</div><div class="metric-lbl">Goles (${s.goalsPerPj.toFixed(2)}/PJ)</div></div>
+        <div class="metric-card"><div class="metric-val">${s.avgMinPj.toFixed(1)}'</div><div class="metric-lbl">Media / PJ (${s.avgMinJ.toFixed(1)}'/J)</div></div>
+        <div class="metric-card"><div class="metric-val">${s.minPerGoal}</div><div class="metric-lbl">Min. / Gol · ${s.ta}TA/${s.tr}TR</div></div>
+      `;
+
+      const jornadas = getUniqueJornadas();
+      const barsEl = document.getElementById("playerBarChart");
+      barsEl.innerHTML = jornadas.map(j => {
+        const entry = state.entries.find(e => Number(e.j) === j && Number(e.dorsal) === Number(player.dorsal));
+        const mins = entry ? Math.min(80, Math.max(0, Number(entry.min) || 0)) : 0;
+        const goals = entry ? (Number(entry.goals) || 0) : 0;
+        const pct = Math.round((mins / 80) * 100);
+        return `
+          <div class="bar-col">
+            <div class="bar-val">${mins > 0 ? mins + "'" : "0'"}</div>
+            <div class="bar-fill ${goals > 0 ? "goal-bar" : ""}" style="height:${pct}%;"></div>
+            <div class="bar-lbl">J${j}</div>
+          </div>
+        `;
+      }).join("");
+
+      const histEl = document.getElementById("playerHistoryList");
+      document.getElementById("playerHistoryCount").textContent = `${jornadas.length} partidos`;
+      histEl.innerHTML = jornadas.slice().reverse().map(j => {
+        const mInfo = state.matches.find(m => Number(m.j) === j) || { rival: `Jornada ${j}`, date: "-", score: "-", cond: "" };
+        const entry = state.entries.find(e => Number(e.j) === j && Number(e.dorsal) === Number(player.dorsal));
+        const st = entry ? entry.status : "NC";
+        const mins = entry ? (Number(entry.min) || 0) : 0;
+        const goals = entry ? (Number(entry.goals) || 0) : 0;
+        const ta = entry ? (Number(entry.ta) || 0) : 0;
+        const tr = entry ? (Number(entry.tr) || 0) : 0;
+        return `
+          <div class="history-row">
+            <div class="history-main">
+              <div class="history-rival">J${j} · vs. ${mInfo.rival} <span style="color:var(--text-muted);font-weight:600;">(${mInfo.score})</span></div>
+              <div class="history-date">${mInfo.date} · ${mInfo.cond || ""}${goals > 0 ? ` · ⚽ ${goals}` : ""}${ta > 0 ? ` · 🟨 ${ta}` : ""}${tr > 0 ? ` · 🟥 ${tr}` : ""}</div>
+            </div>
+            <div class="history-right">
+              <span style="font-weight:800;color:var(--navy-900);">${mins}'</span>
+              <span class="badge st-${st}">${STATUS_LABELS[st] || st}</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderMatchesSelect() {
+      const sel = document.getElementById("matchSelect");
+      const jornadas = getUniqueJornadas();
+      const prevVal = sel.value;
+      sel.innerHTML = jornadas.slice().reverse().map(j => {
+        const m = state.matches.find(x => Number(x.j) === j) || { rival: "Por definir", date: "", score: "-" };
+        return `<option value="${j}">Jornada ${j} · ${m.rival} (${m.score})${m.date ? " — " + m.date : ""}</option>`;
+      }).join("");
+      if (prevVal && Array.from(sel.options).some(o => o.value === prevVal)) {
+        sel.value = prevVal;
+      }
+      renderMatchDetail();
+    }
+
+    function renderMatchDetail() {
+      const j = Number(document.getElementById("matchSelect").value);
+      const m = state.matches.find(x => Number(x.j) === j) || { j, rival: "Rival por definir", date: "-", cond: "-", score: "-", venue: "-" };
+      const jEntries = state.entries.filter(e => Number(e.j) === j);
+
+      const enriched = state.players.map(p => {
+        const e = jEntries.find(x => Number(x.dorsal) === Number(p.dorsal)) || { status: "NC", min: 0, goals: 0, ta: 0, tr: 0 };
+        return { ...p, ...e };
+      });
+
+      const scorers = enriched.filter(x => (Number(x.goals) || 0) > 0);
+      const cards = enriched.filter(x => (Number(x.ta) || 0) > 0 || (Number(x.tr) || 0) > 0);
+      const orderMap = { T: 1, S: 2, SM: 3, LES: 4, NC: 5 };
+      enriched.sort((a, b) => (orderMap[a.status] || 9) - (orderMap[b.status] || 9) || (b.min || 0) - (a.min || 0) || a.dorsal - b.dorsal);
+
+      document.getElementById("matchDetailCard").innerHTML = `
+        <div class="match-banner">
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;">Jornada ${m.j} · ${m.cond || ""} · ${m.date || "-"}</div>
+            <div style="font-size:16px;font-weight:800;color:var(--navy-900);margin-top:2px;">Real Oviedo B vs. ${m.rival}</div>
+            <div style="font-size:11.5px;color:var(--text-muted);margin-top:2px;">📍 ${m.venue || "Sin especificar"}</div>
+          </div>
+          <div class="score-pill">${m.score || "-"}</div>
+        </div>
+
+        ${scorers.length ? `<div style="margin-bottom:10px;font-size:12.5px;"><strong>⚽ Goles:</strong> ${scorers.map(s => `#${s.dorsal} ${s.short} (${s.goals})`).join(", ")}</div>` : ""}
+        ${cards.length ? `<div style="margin-bottom:12px;font-size:12.5px;"><strong>🟨/🟥 Tarjetas:</strong> ${cards.map(c => `#${c.dorsal} ${c.short} (${c.ta}TA/${c.tr}TR)`).join(", ")}</div>` : ""}
+
+        <div class="section-head" style="margin-top:6px;">
+          <h4 class="section-title">Convocatoria y minutos (80')</h4>
+          <span class="section-caption">${enriched.filter(x => ["T","S","SM"].includes(x.status)).length} convocados</span>
+        </div>
+
+        ${enriched.map(item => `
+          <div class="roster-line" onclick="openPlayerProfile(${item.dorsal})" style="cursor:pointer;">
+            <div>
+              <strong style="color:var(--navy-900);">#${item.dorsal} ${item.short}</strong>
+              <span style="font-size:11.5px;color:var(--text-muted);">${item.goals > 0 ? ` · ⚽ ${item.goals}` : ""}</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="font-weight:700;color:var(--navy-900);">${Number(item.min) || 0}'</span>
+              <span class="badge st-${item.status}">${STATUS_LABELS[item.status] || item.status}</span>
+            </div>
+          </div>
+        `).join("")}
+      `;
+    }
+
+    function populateFormSelects() {
+      const sel = document.getElementById("formDorsal");
+      sel.innerHTML = state.players.map(p => `<option value="${p.dorsal}">#${p.dorsal} · ${p.short} (${p.full})</option>`).join("");
+    }
+
+    function syncFormWithExistingEntry() {
+      const j = Number(document.getElementById("formJornada").value);
+      const d = Number(document.getElementById("formDorsal").value);
+      const existing = state.entries.find(e => Number(e.j) === j && Number(e.dorsal) === d);
+      if (existing) {
+        document.getElementById("formStatus").value = existing.status || "NC";
+        document.getElementById("formMin").value = existing.min || 0;
+        document.getElementById("formGoals").value = existing.goals || 0;
+        document.getElementById("formTA").value = existing.ta || 0;
+        document.getElementById("formTR").value = existing.tr || 0;
+      }
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+      document.getElementById(tabId).classList.add("active");
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === tabId));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        switchTab(btn.dataset.tab);
+        if (btn.dataset.tab === "view-ficha") renderPlayerProfile();
+        if (btn.dataset.tab === "view-jornadas") renderMatchesSelect();
+      });
+    });
+
+    document.getElementById("searchInput").addEventListener("input", renderRoster);
+    document.getElementById("posFilter").addEventListener("change", renderRoster);
+    document.getElementById("activityFilter").addEventListener("change", renderRoster);
+    document.getElementById("sortSelect").addEventListener("change", (ev) => setSortKey(ev.target.value));
+    document.querySelectorAll(".sort-pill").forEach(pill => {
+      pill.addEventListener("click", () => setSortKey(pill.dataset.sort));
+    });
+
+    document.getElementById("matchSelect").addEventListener("change", renderMatchDetail);
+    document.getElementById("formJornada").addEventListener("change", syncFormWithExistingEntry);
+    document.getElementById("formDorsal").addEventListener("change", syncFormWithExistingEntry);
+
+    document.getElementById("entryForm").addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      const j = Number(document.getElementById("formJornada").value);
+      const dorsal = Number(document.getElementById("formDorsal").value);
+      const status = document.getElementById("formStatus").value;
+      const min = Math.min(80, Math.max(0, Number(document.getElementById("formMin").value) || 0));
+      const goals = Math.max(0, Number(document.getElementById("formGoals").value) || 0);
+      const ta = Math.max(0, Number(document.getElementById("formTA").value) || 0);
+      const tr = Math.max(0, Number(document.getElementById("formTR").value) || 0);
+
+      const idx = state.entries.findIndex(e => Number(e.j) === j && Number(e.dorsal) === dorsal);
+      const record = { j, dorsal, status, min, goals, ta, tr };
+      if (idx >= 0) state.entries[idx] = record;
+      else state.entries.push(record);
+
+      saveState();
+      renderHeader();
+      renderRoster();
+      showToast(`Guardado J${j} · #${dorsal}`);
+    });
+
+    document.getElementById("addMatchBtn").addEventListener("click", () => {
+      const j = Number(document.getElementById("newMatchJ").value);
+      const date = document.getElementById("newMatchDate").value.trim() || "-";
+      const rival = document.getElementById("newMatchRival").value.trim() || `Rival Jornada ${j}`;
+      const cond = document.getElementById("newMatchCond").value;
+      const score = document.getElementById("newMatchScore").value.trim() || "-";
+      const venue = document.getElementById("newMatchVenue").value.trim() || "-";
+
+      if (!j || j < 1) return showToast("Indica un número de jornada válido");
+
+      const mIdx = state.matches.findIndex(m => Number(m.j) === j);
+      const mObj = { j, date, rival, cond, score, venue };
+      if (mIdx >= 0) state.matches[mIdx] = mObj;
+      else state.matches.push(mObj);
+
+      for (const p of state.players) {
+        const exists = state.entries.some(e => Number(e.j) === j && Number(e.dorsal) === Number(p.dorsal));
+        if (!exists) {
+          state.entries.push({ j, dorsal: p.dorsal, status: "NC", min: 0, goals: 0, ta: 0, tr: 0 });
+        }
+      }
+
+      saveState();
+      renderHeader();
+      renderMatchesSelect();
+      document.getElementById("matchSelect").value = String(j);
+      renderMatchDetail();
+      showToast(`Jornada ${j} creada con los 22 jugadores`);
+    });
+
+    document.getElementById("exportCsvBtn").addEventListener("click", () => {
+      const header = ["Jornada", "Dorsal", "Jugador", "Nombre_Completo", "Estado", "Minutos_80", "Goles", "TA", "TR"];
+      const lines = [header.join(";")];
+      for (const e of state.entries) {
+        const p = state.players.find(x => Number(x.dorsal) === Number(e.dorsal)) || { short: "", full: "" };
+        lines.push([e.j, e.dorsal, p.short, p.full, e.status, e.min, e.goals, e.ta, e.tr].join(";"));
+      }
+      const blob = new Blob(["\uFEFF" + lines.join("\n")], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Real_Oviedo_B_2026_2027_Jornadas.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("CSV descargado");
+    });
+
+    document.getElementById("exportJsonBtn").addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Real_Oviedo_B_Backup.json";
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("Copia JSON descargada");
+    });
+
+    document.getElementById("importJsonInput").addEventListener("change", (ev) => {
+      const file = ev.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(reader.result);
+          if (parsed.players && parsed.matches && parsed.entries) {
+            state = parsed;
+            saveState();
+            renderHeader();
+            renderRoster();
+            renderPlayerProfile();
+            renderMatchesSelect();
+            showToast("Copia JSON restaurada");
+          } else {
+            showToast("Archivo JSON no válido");
+          }
+        } catch (e) {
+          showToast("Error al leer el archivo");
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    document.getElementById("resetDataBtn").addEventListener("click", () => {
+      state = cloneDefault();
+      saveState();
+      renderHeader();
+      renderRoster();
+      renderPlayerProfile();
+      renderMatchesSelect();
+      showToast("Datos restaurados a J1–J9");
+    });
+
+    populateFormSelects();
+    syncFormWithExistingEntry();
+    renderHeader();
+    renderRoster();
+    renderPlayerProfile();
+    renderMatchesSelect();
+  </script>
+</body>
+</html>
